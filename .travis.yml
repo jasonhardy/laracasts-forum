@@ -10,3 +10,6 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+
+notifications:
+  slack: orangejungle:Z8wSEiRSCqiv4Tl775uSl00H
