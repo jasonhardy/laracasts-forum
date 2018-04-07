@@ -31,6 +31,9 @@ class CreateThreadsTest extends TestCase
     public function an_authenticated_user_can_create_threads()
     {
         $this->signIn();
+
+        $this->get('/threads/create')
+             ->assertStatus(200);
         
         $thread = make('App\Models\Thread');
         $response = $this->post('/threads', $thread->toArray());
