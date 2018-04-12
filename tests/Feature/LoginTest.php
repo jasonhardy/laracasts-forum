@@ -10,24 +10,16 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * The login form can be displayed.
-     *
-     * @return void
-     */
-    public function testLoginFormDisplayed()
+    /** @test */
+    public function a_guest_can_view_login_page()
     {
         $response = $this->get('/login');
 
         $response->assertStatus(200);
     }
 
-    /**
-     * A valid user can be logged in.
-     *
-     * @return void
-     */
-    public function testLoginAValidUser()
+    /** @test */
+    public function a_user_can_login()
     {
         $user = create('App\Models\User');
 
@@ -43,11 +35,7 @@ class LoginTest extends TestCase
              ->assertRedirect('/');
     }
 
-    /**
-     * An invalid user cannot be logged in.
-     *
-     * @return void
-     */
+    /** @test */
     // public function testDoesNotLoginAnInvalidUser()
     // {
     //     $this->expectException('Illuminate\Auth\AuthenticationException');
@@ -60,12 +48,8 @@ class LoginTest extends TestCase
     //     ]);
     // }
 
-    /**
-     * A logged in user can be logged out.
-     *
-     * @return void
-     */
-    public function testLogoutAnAuthenticatedUser()
+    /** @test */
+    public function a_user_can_logout()
     {
         $user = create('App\Models\User');
 
@@ -74,6 +58,5 @@ class LoginTest extends TestCase
         $response->assertStatus(302)
                  ->assertRedirect('/');
 
-        //$this->dontSeeIsAuthenticated();
     }
 }

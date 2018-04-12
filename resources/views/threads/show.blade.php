@@ -47,6 +47,14 @@
                         and has {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}.   
                     </p>
 
+                    @can ('update', $thread)
+                        <form method="POST" action="{{ $thread->path() }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-primary">Delete Thread</button>
+                        </form>
+                    @endcan
+
                     
                 </div>
             </div>

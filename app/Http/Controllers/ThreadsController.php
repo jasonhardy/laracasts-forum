@@ -47,6 +47,7 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request, [
             'channel_id' => 'required|exists:channels,id',
             'title' => 'required',
@@ -83,6 +84,8 @@ class ThreadsController extends Controller
      */
     public function destroy($channelSlug, Thread $thread)
     {
+        $this->authorize('update', $thread);
+
         $thread->replies()->delete();
         $thread->delete();
         return response([], 204);
