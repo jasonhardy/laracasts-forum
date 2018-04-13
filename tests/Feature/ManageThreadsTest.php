@@ -98,6 +98,24 @@ class CreateThreadsTest extends TestCase
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
 
+    /** @test */
+    public function authorized_admins_may_delete_threads()
+    {
+        $admin = create('App\Models\User', ['name' => 'Jason']);
+        $this->signIn($admin);
+
+        $user = create('App\Models\User');
+
+        $thread = create('App\Models\Thread', ['user_id' => $user->id]);
+        $reply = create('App\Models\Reply', ['thread_id' => $thread->id]);
+
+        $this->json('DELETE', $thread->path())
+             ->assertStatus(204);
+
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
+
     public function publishThread ($overrides = [])
     {
         $this->withExceptionHandling()->signIn();
