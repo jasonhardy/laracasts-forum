@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\Activity;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class ActivityTest extends TestCase
@@ -49,5 +50,25 @@ class ActivityTest extends TestCase
 
         $activity = Activity::first();
         $this->assertEquals($activity->subject->id, $reply->id);
+    }
+
+    /** @test */
+    public function it_fetches_users_feed()
+    {
+        $this->signIn();
+
+        create('App\Models\Thread', ['user_id' => auth()->id()], 2);
+
+        auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subWeek()]);
+
+        $feed = Activity::feed(auth()->user());
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->format('Y-m-d')
+        ));
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->subWeek()->format('Y-m-d')
+        ));
     }
 }
