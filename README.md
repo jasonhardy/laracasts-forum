@@ -1,4 +1,5 @@
 Larcasts Build TDD Forum
+===============================
 
 [![Build Status](https://travis-ci.org/jasonhardy/laracasts-forum.svg?branch=master)](https://travis-ci.org/jasonhardy/laracasts-forum)
 
@@ -8,4 +9,5 @@ Larcasts Build TDD Forum
 Local Dev Startup:
 ===============================
 php artisan serve
+
 docker start mysql2
