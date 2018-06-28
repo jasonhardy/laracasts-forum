@@ -15,7 +15,6 @@ class ReplyTest extends TestCase
     {
         create('App\Models\Thread');
         $reply = create('App\Models\Reply');
-        dd($reply);
 
         $this->assertInstanceOf('App\Models\User', $reply->owner);
     }
